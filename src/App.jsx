@@ -10,6 +10,9 @@ function App() {
   // Dark mode preference
   const [darkMode, setDarkMode] = useLocalStorage("darkMode", false);
 
+  // CUSTOM font size preference
+  const [displayPreferences, setDisplayPreferences] = useLocalStorage("displayPreferences", { fontSize: 16 });
+
   const formSubmitHandler = (event) => {
     event.preventDefault();
 
@@ -17,6 +20,7 @@ function App() {
       name,
       language,
       darkMode,
+      displayPreferences,
     });
 
     alert("Preferences saved!");
@@ -62,6 +66,20 @@ function App() {
           />
         </div>
 
+        <div className="form-control">
+          <label htmlFor="fontSize">Preferred Font Size</label>
+          <select
+            id="fontSize"
+            value={displayPreferences.fontSize}
+            onChange={(event) => setDisplayPreferences({...displayPreferences, fontSize: Number(event.target.value),})}
+          >
+            <option value={14}>(14px)</option>
+            <option value={16}>(16px)</option>
+            <option value={20}>(20px)</option>
+            <option value={24}>(24px)</option>
+          </select>
+        </div>
+
         <button type="submit">Save Preferences</button>
       </form>
 
@@ -75,6 +93,9 @@ function App() {
         </p>
         <p>
           <strong>Dark Mode:</strong> {darkMode ? "On" : "Off"}
+        </p>
+        <p>
+          <strong>Font Size: </strong> {displayPreferences.fontSize}px
         </p>
       </div>
     </div>
