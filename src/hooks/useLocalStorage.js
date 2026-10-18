@@ -5,12 +5,14 @@ const useLocalStorage = (key, initValue) => {
     // else use 'value'
     const [value, setValue] = useState(() => {
         const savedValue = localStorage.getItem(key);
-        return savedValue || initValue;
+        return savedValue !== null ? JSON.parse(savedValue) : initValue;
     });
 
     useEffect(() => {
-        localStorage.setItem(key, value);
-    }, [value]);
+        localStorage.setItem(key, JSON.stringify(value));
+    }, [key, value]);
+
+    return [value, setValue];
 };
 
 export default useLocalStorage;
